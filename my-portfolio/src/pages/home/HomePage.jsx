@@ -15,7 +15,7 @@ const HomePage = () => {
   const boxes = [
     { id: 0, title: "Resume", image: "/boxes/Resume.png", file: "/resume.pdf" },
     { id: 1, title: "Secure Data Wiping", image: "/boxes/Project3.png", url: "https://sih-toz2.vercel.app/" },
-    { id: 2, title: "MediFlow", image: "/boxes/Project2.png", url: "https://sih-toz2.vercel.app/" },
+    { id: 2, title: "MediFlow", image: "/boxes/Project2.png" },
     { id: 3, title: "PragatiAI", image: "/boxes/Project1.png" },
     { id: 4, title: "Movie Reviews", image: "/boxes/Movies.png" },
     { id: 5, title: "Game Reviews", image: "/boxes/Games.png" },
