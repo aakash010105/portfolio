@@ -8,24 +8,37 @@ const HomePage = () => {
   const [animationDone, setAnimationDone] = useState(false);
   const [selectedBox, setSelectedBox] = useState(null);
   const [currentTime, setCurrentTime] = useState('');
-  const totalBoxes = 8; // or fetch dynamically
+  const totalBoxes = 7; // or fetch dynamically
   const BOX_WIDTH = 184; // box size + gap
-const ANCHOR_X = -130; // visual anchor position for selected box
-const boxLabels = Array.from({ length: totalBoxes }, (_, i) => `Box ${i + 1}`);
+  const ANCHOR_X = -130; // visual anchor position for selected box
+  const [openFile, setOpenFile] = useState(null);
+  const boxes = [
+    { id: 0, title: "Resume", image: "/boxes/Resume.png", file: "/resume.pdf" },
+    { id: 1, title: "Secure Data Wiping", image: "/boxes/Project3.png", url: "https://sih-toz2.vercel.app/" },
+    { id: 2, title: "MediFlow", image: "/boxes/Project2.png", url: "https://sih-toz2.vercel.app/" },
+    { id: 3, title: "PragatiAI", image: "/boxes/Project1.png" },
+    { id: 4, title: "Movie Reviews", image: "/boxes/Movies.png" },
+    { id: 5, title: "Game Reviews", image: "/boxes/Games.png" },
+    { id: 6, title: "Currently what I'm listening to", image: "/boxes/Music.png" },
+  ];
+
+
 
   // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (!animationDone) return;
-      if (e.key === 'ArrowRight') {
-        setSelectedBox((prev) => (prev === null ? 0 : (prev + 1) % boxLabels.length));
-      } else if (e.key === 'ArrowLeft') {
-        setSelectedBox((prev) => (prev === null ? 0 : (prev - 1 + boxLabels.length) % boxLabels.length));
-      }
+      setSelectedBox((prev) => {
+        let newIndex = prev ?? 0; // fallback to first box
+        if (e.key === 'ArrowRight') newIndex = Math.min(newIndex + 1, totalBoxes - 1);
+        if (e.key === 'ArrowLeft') newIndex = Math.max(newIndex - 1, 0);
+        return newIndex;
+      });
     };
+
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [animationDone]);
+  }, [animationDone, totalBoxes]);
 
   // Set time
   useEffect(() => {
@@ -58,7 +71,7 @@ const boxLabels = Array.from({ length: totalBoxes }, (_, i) => `Box ${i + 1}`);
       const timer = setTimeout(() => {
         setAnimationDone(true);
         setSelectedBox(0); // Select first box after animation
-      }, 10000); // match animation duration
+      }, 1500); // match animation duration
       return () => clearTimeout(timer);
     }
   }, [startAnimation]);
@@ -83,7 +96,7 @@ const boxLabels = Array.from({ length: totalBoxes }, (_, i) => `Box ${i + 1}`);
               : { scale: 0.5, x: 35, y: 250, opacity: 0.5, scaleY: 0.4 }
             : { opacity: 0 }
         }
-        transition={{ duration: 10, ease: 'easeOut' }}
+        transition={{ duration: 1, ease: 'easeOut' }}
         className="absolute left-64 w-[90vw] max-w-6xl h-1 z-30 origin-left"
         style={{
           backgroundImage:
@@ -108,7 +121,7 @@ const boxLabels = Array.from({ length: totalBoxes }, (_, i) => `Box ${i + 1}`);
                 ? { scale: 1.2, x: -170, y: -10, opacity: 1 }
                 : { scale: 0.6, x: 35, y: 165, opacity: 1 }
             }
-            transition={{ duration: 10, ease: 'easeOut' }}
+            transition={{ duration: 1, ease: 'easeOut' }}
             className="w-10 h-10 object-contain"
           />
         </div>
@@ -124,7 +137,7 @@ const boxLabels = Array.from({ length: totalBoxes }, (_, i) => `Box ${i + 1}`);
                 ? { scale: 0.9, x: -145, y: -10, opacity: 1 }
                 : { scale: 0.6, x: 30, y: 165, opacity: 1 }
             }
-            transition={{ duration: 10, ease: 'easeOut' }}
+            transition={{ duration: 1, ease: 'easeOut' }}
             className="w-10 h-10 object-contain"
           />
         </div>
@@ -140,7 +153,7 @@ const boxLabels = Array.from({ length: totalBoxes }, (_, i) => `Box ${i + 1}`);
                 ? { scale: 1.1, x: 250, y: -10, opacity: 1 }
                 : { scale: 0.6, x: 30, y: 165, opacity: 1 }
             }
-            transition={{ duration: 10, ease: 'easeOut' }}
+            transition={{ duration: 1, ease: 'easeOut' }}
             className="w-14 h-14 object-contain"
           />
         </div>
@@ -156,7 +169,7 @@ const boxLabels = Array.from({ length: totalBoxes }, (_, i) => `Box ${i + 1}`);
                 ? { scale: 0.9, x: 200, y: 0, opacity: 0 }
                 : { scale: 1.4, x: 20, y: 172, opacity: 1 }
             }
-            transition={{ duration: 10, ease: 'easeOut' }}
+            transition={{ duration: 1, ease: 'easeOut' }}
             className="w-14 h-14 object-contain"
           />
         </div>
@@ -172,7 +185,7 @@ const boxLabels = Array.from({ length: totalBoxes }, (_, i) => `Box ${i + 1}`);
                 ? { scale: 0.9, x: 150, y: 0, opacity: 0 }
                 : { scale: 1.1, x: 10, y: 164, opacity: 1 }
             }
-            transition={{ duration: 10, ease: 'easeOut' }}
+            transition={{ duration: 1, ease: 'easeOut' }}
             className="w-14 h-14 object-contain"
           />
         </div>
@@ -189,7 +202,7 @@ const boxLabels = Array.from({ length: totalBoxes }, (_, i) => `Box ${i + 1}`);
                 ? { scale: 0.9, x: 160, y: -10, opacity: 1 }
                 : { scale: 0.6, x: 5, y: 165, opacity: 1 }
             }
-            transition={{ duration: 10, ease: 'easeOut' }}
+            transition={{ duration: 1, ease: 'easeOut' }}
             className="w-12 h-12 object-cover mb-1"
             style={{ borderRadius: 0 }}
           />
@@ -203,7 +216,7 @@ const boxLabels = Array.from({ length: totalBoxes }, (_, i) => `Box ${i + 1}`);
               ? { scale: 0.9, x: 285, y: -10, opacity: 1 }
               : { scale: 0.6, x: 70, y: 165, opacity: 0 }
           }
-          transition={{ duration: 10, ease: 'easeOut' }}
+          transition={{ duration: 1, ease: 'easeOut' }}
           className="absolute top-3/2 -translate-y-1/2 text-white font-semibold text-sm md:text-lg whitespace-nowrap"
         >
           Aakash Raj Jindal
@@ -220,7 +233,7 @@ const boxLabels = Array.from({ length: totalBoxes }, (_, i) => `Box ${i + 1}`);
                 ? { scale: 1.2, x: 575, y: -10, opacity: 1 }
                 : { scale: 0.8, x: 0, y: 165, opacity: 1 }
             }
-            transition={{ duration: 10, ease: 'easeOut' }}
+            transition={{ duration: 1, ease: 'easeOut' }}
             className="w-10 h-10 object-contain"
           />
         </div>
@@ -236,7 +249,7 @@ const boxLabels = Array.from({ length: totalBoxes }, (_, i) => `Box ${i + 1}`);
                 ? { scale: 0.6, x: 580, y: 0, opacity: 0 }
                 : { scale: 0.8, x: -10, y: 165, opacity: 1 }
             }
-            transition={{ duration: 10, ease: 'easeOut' }}
+            transition={{ duration: 1, ease: 'easeOut' }}
             className="w-10 h-10 object-contain"
           />
         </div>
@@ -252,7 +265,7 @@ const boxLabels = Array.from({ length: totalBoxes }, (_, i) => `Box ${i + 1}`);
                 ? { scale: 0.6, x: 590, y: 0, opacity: 0 }
                 : { scale: 0.7, x: -20, y: 165, opacity: 1 }
             }
-            transition={{ duration: 10, ease: 'easeOut' }}
+            transition={{ duration: 1, ease: 'easeOut' }}
             className="w-8 h-8 object-contain filter invert brightness-200"
           />
         </div>
@@ -264,45 +277,73 @@ const boxLabels = Array.from({ length: totalBoxes }, (_, i) => `Box ${i + 1}`);
               ? { opacity: 1, x: 480, y: -10 }
               : { opacity: 0, x: 480, y: -10 }
           }
-          transition={{ duration: 10, delay: 1, ease: 'easeOut' }}
+          transition={{ duration: 1, delay: 1, ease: 'easeOut' }}
           className="text-white text-xl md:text-1xl ml-2"
         >
           {currentTime}
         </motion.div>
       </div>
       <motion.div
-  initial={{ scale: 0.5, x: -600, y: -280 }}
-  animate={
-    videoReady && startAnimation
-      ? {
-          scale: 1.5,
-          x: ANCHOR_X - (selectedBox ?? 0) * BOX_WIDTH,
-          y: -315
+        initial={{ scale: 0.5, x: -600, y: -280 }}
+        animate={
+          videoReady && startAnimation
+            ? {
+              scale: 1.5,
+              x: ANCHOR_X - (selectedBox ?? 0) * BOX_WIDTH,
+              y: -315
+            }
+            : { scale: 0.5, x: -600, y: -280 }
         }
-      : { scale: 0.5, x: -600, y: -280 }
-  }
-  transition={{ duration: 0.3, ease: 'easeOut' }}
-  className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-30"
->
-  <motion.div
-    className="flex gap-4"
-    animate={{
-      x: 0 // no extra x shift, already handled by outer container
-    }}
-    transition={{ duration: 0.6 }}
+        transition={{ duration: 0.3, ease: 'easeOut' }}
+        className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-30"
+      >
+        <motion.div
+          className="flex gap-4"
+          animate={{
+            x: 0 // no extra x shift, already handled by outer container
+          }}
+          transition={{ duration: 0.6 }}
+        >
+          {boxes.map((box, index) => (
+            <SelectableBox
+              key={index}
+              title={box.title}       // <-- this uses your custom title
+              image={box.image}       // <-- this uses your custom image
+              isSelected={animationDone && selectedBox === index}
+              animationDone={animationDone}
+              onClick={() => {
+                setSelectedBox(index); // keep selection effect
+                if (box.url) window.open(box.url, "_blank");
+                if (box.file) setOpenFile(box.file); // opens the site in a new tab
+              }}
+            />
+          ))}
+        </motion.div>
+      </motion.div>
+      {openFile && (
+  <div
+    className="fixed inset-0 bg-black/70 flex justify-center items-center z-50"
+    onClick={() => setOpenFile(null)} // close modal on background click
   >
-    {boxLabels.map((label, index) => (
-      <SelectableBox
-        key={index}
-        label={label}
-        isSelected={animationDone && selectedBox === index}
-        isAdjacent={animationDone && Math.abs(index - selectedBox) === 1}
-        animationDone={animationDone}
-        onClick={() => setSelectedBox(index)}
+    <div
+      className="bg-white w-11/12 md:w-3/4 h-3/4 p-4 relative"
+      onClick={(e) => e.stopPropagation()} // prevent modal from closing when clicking inside
+    >
+      <iframe
+        src={openFile}
+        className="w-full h-full"
+        title="Document Viewer"
       />
-    ))}
-  </motion.div>
-</motion.div>
+      <button
+        className="absolute top-2 right-2 bg-red-500 text-white px-3 py-1 rounded"
+        onClick={() => setOpenFile(null)}
+      >
+        Close
+      </button>
+    </div>
+  </div>
+)}
+
     </div>
   );
 };
